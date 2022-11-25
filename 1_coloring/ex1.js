@@ -4,7 +4,7 @@ let uMaterial2;
 let brightness;
 
 function preload() {
-  shaderb = readShader('/ex1.frag',
+  shaderb = readShader('ex1.frag',
   { matrices: Tree.pmvMatrix, varyings: [Tree.brightness, Tree.uMaterial1, Tree.uMaterial2] });
   
 }
