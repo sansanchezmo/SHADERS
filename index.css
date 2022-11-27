@@ -21,3 +21,8 @@ html, body {
     filter: grayscale(0%);
 
 }
+
+.column {
+    display: flex;
+    flex-direction: column;
+}

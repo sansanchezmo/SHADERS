@@ -1,0 +1,35 @@
+body {
+    padding: 0; 
+    margin: 0;
+} 
+
+canvas {
+    vertical-align: top;
+}
+
+.back {
+    display: flex;
+    font-family: 'Nabla', cursive;
+    margin: 0 0 0 0;
+    padding: 0 0 0 4vh;
+    top: 0;
+    min-height: 0;
+    color: yellow;
+    font-weight: bold;
+    font-size: 10vh;
+    position: fixed;
+    filter: grayscale(100%);
+    opacity: 30%;
+    text-decoration: none;
+
+}
+
+.back:hover {
+    filter: grayscale(0%);
+    opacity: 100%;
+}
+
+.suspense-music {
+    display: none;
+    
+}
