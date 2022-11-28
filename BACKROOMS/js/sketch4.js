@@ -41,7 +41,7 @@ function preload() {
   walls = loadImage('assets/images/walls.png');
   floor = loadImage('assets/images/floor.png');
 
-  shaderAL = readShader("fragments/sketch3.frag", {
+  shaderAL = readShader("fragments/sketch4.frag", {
     varyings: Tree.NONE,
   });
 }
