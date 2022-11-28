@@ -33,7 +33,7 @@ let roof;
 let walls;
 let floor;
 
-let lightShader;
+let shaderAL;
 let ambient;
 
 function preload() {
@@ -41,11 +41,9 @@ function preload() {
   walls = loadImage('assets/images/walls.png');
   floor = loadImage('assets/images/floor.png');
 
-  lightShader = readShader('fragments/sketch3.frag',
-    {
-      uniforms:
-        { "uMaterialColor": { type: "v4", value: [255, 255, 255, 0] }, }
-    });
+  shaderAL = readShader("/showcase/sketches/SHADERS/Lighting/AL.frag", {
+    varyings: Tree.NONE,
+  });
 }
 
 function mouseWheel(event) {
@@ -58,10 +56,18 @@ function mouseWheel(event) {
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight, WEBGL);
-
+  noLights();
   // color picker
   colorPicker1 = createColorPicker('black');
   colorPicker1.position(0, 0);
+  colorPicker1.input(() => {
+    shaderAL.setUniform("lightColor", [
+      red(colorPicker1.color()) / 255,
+      green(colorPicker1.color()) / 255,
+      blue(colorPicker1.color()) / 255,
+      1,
+    ]);
+  });
 
   // disable p5 lighting
   // noLights();
@@ -69,13 +75,12 @@ function setup() {
   ambient.position(window.innerWidth - 100, 10);
   ambient.style('width', '80px');
   ambient.input(() => {
-    lightShader.setUniform('ambient', ambient.value());
-    console.log('Ambient: ' + ambient.value());
+    shaderAL.setUniform("ambient", ambient.value());
   });
-  shader(lightShader);
-  console.log(lightShader);
-  lightShader.setUniform('ambient', ambient.value());
-  lightShader.setUniform('ambient4', colorPicker1.color().levels);
+
+  shader(shaderAL);
+  shaderAL.setUniform("ambient", ambient.value());
+  shaderAL.setUniform("lightColor", [1, 1, 1, 1]);
   // console.log(colorPicker1.color()["levels"])
 
 
@@ -97,13 +102,15 @@ function draw() {
 
   let dx = mouseX - width / 2;
   let dy = mouseY - height / 2;
-
+  
+  resetShader();
+  shader(shaderAL);
 
   // ambientLight(102, 102, 102);
-  lightEyePosition = treeLocation(light.worldPosition,
-    { from: Tree.WORLD, to: Tree.EYE });
+  // lightEyePosition = treeLocation(light.worldPosition,
+  //  { from: Tree.WORLD, to: Tree.EYE });
   // console.log(lightEyePosition)
-  lightShader.setUniform('uLightPosition', lightEyePosition.array());
+  // lightShader.setUniform('uLightPosition', lightEyePosition.array());
 
 
   cam.pan(ang(-D.cx));
