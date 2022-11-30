@@ -56,8 +56,8 @@ function mouseWheel(event) {
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight, WEBGL);
-    // noLights();
-    textureMode(NORMAL);
+    noLights();
+    textureMode(IMAGE);
     // color picker
     colorPicker1 = createColorPicker('black');
     colorPicker1.position(0, 0);
@@ -100,17 +100,12 @@ function draw() {
     noStroke();
     // pointLight(light, 0, -80, -880);
     perspective(PI / zoom, width / height, 0.1, 5000);
+    resetShader();
+
 
     // LIGHT CONFIGURATION
-    // let pointLight = getPointLight();
-    resetShader();
-    push();
-    translate(pointLight.position);
-    noStroke();
-    fill("white");
-    sphere(3);
-    pop();
 
+    
     shader(shaderAL);
     shaderAL.setUniform(
         "uLightPosition",
@@ -119,6 +114,10 @@ function draw() {
             to: Tree.EYE,
         }).array()
     );
+    
+
+    
+
 
     let dx = mouseX - width / 2;
     let dy = mouseY - height / 2;
@@ -152,7 +151,8 @@ function draw() {
     }
 
     push();
-    normalMaterial();
+    //texture(roof);
+    // normalMaterial();
     translate(0, 0, -900)
     rotateX(frameCount * 0.03);
     rotateY(frameCount * 0.03);
@@ -160,7 +160,8 @@ function draw() {
     pop();
 
     push();
-    specularMaterial(250);
+    //texture(roof);
+    // normalMaterial(250);
     translate(0, 0, -100)
     rotateX(frameCount * 0.03);
     rotateY(frameCount * 0.03);
@@ -177,16 +178,18 @@ function draw() {
     pared(-1250, 0, -1200, 0, 90, 0, 200);
     //pared(PARED);
 
+    
+
     //Suelo
     for (var k = -20; k < 20; k++) {
         for (var l = -20; l < 20; l++) {
             push();
             translate(k * 100, 50, l * 100);
-            ambientMaterial(108, 114, 23);
+            // ambientMaterial(108, 114, 23);
             //pointLight(255, 255, 255, D.cx- width / 2, -D.cy - height / 2, 250);
             rotateX(ang(90));
-            // fill(108, 114, 23);
-            // texture(floor);
+            fill(108, 114, 23);
+            //texture(floor);
             plane(100);
             pop();
         }
@@ -339,6 +342,23 @@ function draw() {
 
     }
 
+    push();
+    translate(pointLight.position);
+    noStroke();
+    fill("white");
+    sphere(3);
+    pop();
+
+    
+    shader(shaderAL);
+    shaderAL.setUniform(
+        "uLightPosition",
+        treeLocation(pointLight.position, {
+            from: Tree.WORLD,
+            to: Tree.EYE,
+        }).array()
+    );
+
 
 }
 function keyPressed() {
@@ -359,9 +379,9 @@ function pared(x, y, z, dx, dy, dz, l) {
     rotateX(ang(dx));
     rotateY(ang(dy));
     rotateZ(ang(dz));
-    // textureMode(IMAGE);
-    texture(walls);
-    // fill(228, 225, 70);
+    textureMode(IMAGE);
+    // texture(walls);
+    fill(228, 225, 70);
     plane(l, 179);
     pop();
 
@@ -372,12 +392,9 @@ function pared(x, y, z, dx, dy, dz, l) {
 
 function getPointLight() {
     let angle = frameCount * 0.03;
-    let rad = 30;
-    let px = cos(angle) * rad;
-    let py = sin(angle) * rad;
     let r = sin(angle) * 0.5 + 0.5;
     return {
-        position: createVector(100, 100, 0),
+        position: createVector(0, -60, -880),
         color: color(1 - r, r / 2, r),
     };
 }
