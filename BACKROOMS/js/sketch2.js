@@ -50,6 +50,7 @@ function mouseWheel(event) {
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight, WEBGL);
   cam = createCamera();
+  textureMode(NORMAL);
   // Carga de efectos de sonido
   stepsSound = loadSound('assets/audio/step.mp3');
   portalSound = loadSound('assets/audio/portal.mp3');

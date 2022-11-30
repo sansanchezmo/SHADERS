@@ -60,8 +60,8 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight, WEBGL);
 
   // color picker
-  colorPicker1 = createColorPicker('black');
-  colorPicker1.position(0, 0);
+  // colorPicker1 = createColorPicker('black');
+  // colorPicker1.position(0, 0);
 
   // disable p5 lighting
   // noLights();
@@ -75,7 +75,7 @@ function setup() {
   shader(lightShader);
   console.log(lightShader);
   lightShader.setUniform('ambient', ambient.value());
-  lightShader.setUniform('ambient4', colorPicker1.color().levels);
+  // lightShader.setUniform('ambient4', colorPicker1.color().levels);
   // console.log(colorPicker1.color()["levels"])
 
 
@@ -307,7 +307,7 @@ function draw() {
 
   }
 
-  lightShader.setUniform('ambient4', colorPicker1.color().levels);
+  // lightShader.setUniform('ambient4', colorPicker1.color().levels);
 
 }
 function keyPressed() {
